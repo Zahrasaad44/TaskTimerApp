@@ -3,6 +3,7 @@ package com.example.tasktimerapp
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
+import com.example.tasktimerapp.database.Category
 import com.example.tasktimerapp.database.relations.CategoryTasksRelationship
 import com.example.tasktimerapp.databinding.ActivityMainBinding
 
@@ -23,14 +24,24 @@ class MainActivity : AppCompatActivity() {
                 result + task
             })
 
+
+
+        viewModel.fetchCategories().observe(this, {
+            cate -> getC(cate)
+        })
+
+
+
+
         binding.button.setOnClickListener { add() }
     }
 /// for testing //
-    fun add() {
+   private fun add() {
         viewModel.addCategory("test", R.drawable.day)
     }
 
-//    fun getC(category: Category) {
-//        binding.imageCV.setBackgroundResource(category.categoryImage)
-//    }
+    private fun getC(category: List<Category>) {
+       // viewModel.fetchCategories()
+        binding.imageCV.setBackgroundResource(category[0].categoryImage)
+    }
 }
